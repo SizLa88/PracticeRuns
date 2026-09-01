@@ -1,0 +1,18 @@
+# Virtual Environment
+.venv/
+venv/
+
+# PyCharm
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Reports
+allure-results/
+allure-report/
+
+# Logs
+*.log
