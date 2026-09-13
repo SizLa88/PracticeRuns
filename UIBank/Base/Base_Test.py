@@ -1,14 +1,15 @@
-from UIBank.Base.Driver_Factory import DriverFactory
+import pytest
+
+from Base.Driver_Factory import DriverFactory
 
 
 class BaseTest:
 
+    @pytest.fixture(autouse=True)
     def setup(self):
 
         self.driver = DriverFactory.initialize_driver("edge")
 
-        return self.driver
-
-    def teardown(self):
+        yield
 
         DriverFactory.quit_driver()

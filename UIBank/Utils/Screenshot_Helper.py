@@ -1,5 +1,5 @@
+import os
 from datetime import datetime
-from pathlib import Path
 
 
 class ScreenshotHelper:
@@ -7,21 +7,29 @@ class ScreenshotHelper:
     @staticmethod
     def take_screenshot(driver, screenshot_name):
 
-        try:
+        screenshots_dir = "Screenshots"
 
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        os.makedirs(
+            screenshots_dir,
+            exist_ok=True
+        )
 
-            screenshots_folder = Path("Screenshots")
-            screenshots_folder.mkdir(exist_ok=True)
+        timestamp = datetime.now().strftime(
+            "%Y%m%d_%H%M%S"
+        )
 
-            file_name = f"{screenshot_name}_{timestamp}.png"
+        screenshot_path = (
+            f"{screenshots_dir}/"
+            f"{screenshot_name}_"
+            f"{timestamp}.png"
+        )
 
-            destination = screenshots_folder / file_name
+        driver.save_screenshot(
+            screenshot_path
+        )
 
-            driver.save_screenshot(str(destination))
+        print(
+            f"Screenshot saved: {screenshot_path}"
+        )
 
-            print(f"Screenshot saved: {destination}")
-
-        except Exception as e:
-
-            print(f"Failed to take screenshot: {e}")
+        return screenshot_path

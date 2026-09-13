@@ -1,76 +1,27 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from Base.Base_Test import BaseTest
 
-from UIBank.Utils import Config
-from UIBank.Utils.Screenshot_Helper import ScreenshotHelper
+from Pages.Login_Page import LoginPage
+
+from Utils.Config import Config
 
 
-def test_login():
+class TestLogin(BaseTest):
 
-    driver = webdriver.Edge()
+    def test_login(self):
 
-    try:
-
-        driver.maximize_window()
-
-        driver.get(Config.URL)
-
-        wait = WebDriverWait(driver, 10)
-
-        # Username
-
-        wait.until(
-            EC.visibility_of_element_located(
-                (By.ID, "username")
-            )
-        ).send_keys(Config.USERNAME)
-
-        # Password
-
-        wait.until(
-            EC.visibility_of_element_located(
-                (By.ID, "password")
-            )
-        ).send_keys(Config.PASSWORD)
-
-        # Login Button
-
-        wait.until(
-            EC.element_to_be_clickable(
-                (By.XPATH,
-                 "/html/body/app-root/body/div/app-welcome-page/div[1]/div/div[1]/div/form/div[3]/button")
-            )
-        ).click()
-
-        # Privacy Policy Button
-
-        wait.until(
-            EC.element_to_be_clickable(
-                (By.XPATH,
-                 "//*[@id='mat-mdc-dialog-0']/div/div/app-agreement-popup/mat-dialog-content/div[2]/button")
-            )
-        ).click()
-
-        ScreenshotHelper.take_screenshot(
-            driver,
-            "Login_Success"
+        self.driver.get(
+            Config.URL
         )
 
-        print("Login Successful")
-
-    except Exception as e:
-
-        ScreenshotHelper.take_screenshot(
-            driver,
-            "Login_Failed"
+        login_page = LoginPage(
+            self.driver
         )
 
-        print(f"Test Failed: {e}")
+        login_page.login(
+            Config.USERNAME,
+            Config.PASSWORD
+        )
 
-        raise
-
-    finally:
-
-        driver.quit()
+        print(
+            "Login Successful"
+        )

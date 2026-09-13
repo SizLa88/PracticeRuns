@@ -1,41 +1,77 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class LoginPage:
 
-    USERNAME = (By.ID, "username")
-    PASSWORD = (By.ID, "password")
+    def __init__(self, driver):
+
+        self.driver = driver
+
+    # Locators
+
+    USERNAME_FIELD = (
+        By.ID,
+        "username"
+    )
+
+    PASSWORD_FIELD = (
+        By.ID,
+        "password"
+    )
 
     LOGIN_BUTTON = (
         By.XPATH,
         "/html/body/app-root/body/div/app-welcome-page/div[1]/div/div[1]/div/form/div[3]/button"
     )
 
-    PRIVACY_BUTTON = (
+    AGREEMENT_BUTTON = (
         By.XPATH,
         "//*[@id='mat-mdc-dialog-0']/div/div/app-agreement-popup/mat-dialog-content/div[2]/button"
     )
 
-    def __init__(self, driver):
-        self.driver = driver
-        self.wait = WebDriverWait(driver, 10)
+    # Methods
 
-    def login(self, username, password):
+    def enter_username(self, username):
 
-        self.wait.until(
-            EC.visibility_of_element_located(self.USERNAME)
-        ).send_keys(username)
+        self.driver.find_element(
+            *self.USERNAME_FIELD
+        ).send_keys(
+            username
+        )
 
-        self.wait.until(
-            EC.visibility_of_element_located(self.PASSWORD)
-        ).send_keys(password)
+    def enter_password(self, password):
 
-        self.wait.until(
-            EC.element_to_be_clickable(self.LOGIN_BUTTON)
+        self.driver.find_element(
+            *self.PASSWORD_FIELD
+        ).send_keys(
+            password
+        )
+
+    def click_login(self):
+
+        self.driver.find_element(
+            *self.LOGIN_BUTTON
         ).click()
 
-        self.wait.until(
-            EC.element_to_be_clickable(self.PRIVACY_BUTTON)
+    def accept_agreement(self):
+
+        self.driver.find_element(
+            *self.AGREEMENT_BUTTON
         ).click()
+
+    def login(
+            self,
+            username,
+            password):
+
+        self.enter_username(
+            username
+        )
+
+        self.enter_password(
+            password
+        )
+
+        self.click_login()
+
+        self.accept_agreement()

@@ -1,26 +1,17 @@
-"""
-Application Configuration
-UIBank Test Data
-"""
-
-# Application URL
-
 URL = "https://uibank.uipath.com/welcome"
 
-# Login Credentials
-
 USERNAME = "SizBankTest"
+
 PASSWORD = "Test@123"
 
-# Savings Account Data
+SAVINGS_ACCOUNT_NAME = "SizSavesAcc"
 
-SAVINGS_ACCOUNT_NAME = "SizweSaves"
-SAVINGS_ACCOUNT_NUMBER = "62275252"
+SAVINGS_ACCOUNT_NUMBER = "66422344"
+
+CHECKING_ACCOUNT_NAME = "SizCheckAcc"
+
+CHECKING_ACCOUNT_NUMBER = "66422345"
+
+LOAN_ACCOUNT_NUMBER = "6aa25ba45765320048f8303f"
 
 BROWSER = "edge"
-
-WAIT_TIME = 10
-
-SCREENSHOT_PATH = "Screenshots/"
-
-REPORT_PATH = "Reports/"
