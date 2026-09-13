@@ -74,4 +74,3 @@ def test_login():
     finally:
 
         driver.quit()
-``
