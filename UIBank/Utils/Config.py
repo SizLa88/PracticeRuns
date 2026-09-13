@@ -1,17 +1,18 @@
-URL = "https://uibank.uipath.com/welcome"
+class Config:
 
-USERNAME = "SizBankTest"
+    URL = "https://uibank.uipath.com/welcome"
 
-PASSWORD = "Test@123"
+    USERNAME = "SizBankTest"
+    PASSWORD = "Test@123"
 
-SAVINGS_ACCOUNT_NAME = "SizSavesAcc"
+    SAVINGS_ACCOUNT_NAME = "SizSavesAcc"
+    SAVINGS_ACCOUNT_NUMBER = "66422344"
 
-SAVINGS_ACCOUNT_NUMBER = "66422344"
+    CHECKING_ACCOUNT_NAME = "SizCheckAcc"
+    CHECKING_ACCOUNT_NUMBER = "66422345"
 
-CHECKING_ACCOUNT_NAME = "SizCheckAcc"
+    LOAN_ACCOUNT_NUMBER = "6aa25ba45765320048f8303f"
 
-CHECKING_ACCOUNT_NUMBER = "66422345"
+    TRANSFER_AMOUNT = "100"
 
-LOAN_ACCOUNT_NUMBER = "6aa25ba45765320048f8303f"
-
-BROWSER = "edge"
+    BROWSER = "edge"

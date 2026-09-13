@@ -1,4 +1,6 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class OpenSavingsPage:
@@ -33,41 +35,55 @@ class OpenSavingsPage:
     def __init__(self, driver):
 
         self.driver = driver
+        self.wait = WebDriverWait(driver, 15)
 
     # Methods
 
     def click_savings_account(self):
 
-        self.driver.find_element(
-            *self.SAVINGS_ACCOUNT_TILE
+        self.wait.until(
+            EC.element_to_be_clickable(
+                self.SAVINGS_ACCOUNT_TILE
+            )
         ).click()
 
     def enter_nickname(
             self,
             nickname):
 
-        self.driver.find_element(
-            *self.ACCOUNT_NICKNAME
-        ).send_keys(
+        element = self.wait.until(
+            EC.visibility_of_element_located(
+                self.ACCOUNT_NICKNAME
+            )
+        )
+
+        element.clear()
+        element.send_keys(
             nickname
         )
 
     def select_savings_account(self):
 
-        self.driver.find_element(
-            *self.SAVINGS_ACCOUNT_OPTION
+        self.wait.until(
+            EC.element_to_be_clickable(
+                self.SAVINGS_ACCOUNT_OPTION
+            )
         ).click()
 
     def submit_application(self):
 
-        self.driver.find_element(
-            *self.OPEN_ACCOUNT_BUTTON
+        self.wait.until(
+            EC.element_to_be_clickable(
+                self.OPEN_ACCOUNT_BUTTON
+            )
         ).click()
 
     def view_accounts(self):
 
-        self.driver.find_element(
-            *self.VIEW_ACCOUNTS_BUTTON
+        self.wait.until(
+            EC.element_to_be_clickable(
+                self.VIEW_ACCOUNTS_BUTTON
+            )
         ).click()
 
     def open_savings_account(

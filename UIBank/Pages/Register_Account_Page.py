@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
@@ -12,7 +14,7 @@ class RegisterAccountPage:
 
         self.wait = WebDriverWait(
             driver,
-            10
+            15
         )
 
     # Locators
@@ -108,7 +110,9 @@ class RegisterAccountPage:
             EC.visibility_of_element_located(
                 self.EMAIL
             )
-        ).send_keys(email)
+        ).send_keys(
+            str(email).strip()
+        )
 
     def enter_password(self, password):
 
@@ -116,7 +120,9 @@ class RegisterAccountPage:
             EC.visibility_of_element_located(
                 self.PASSWORD
             )
-        ).send_keys(password)
+        ).send_keys(
+            str(password).strip()
+        )
 
     def enter_first_name(self, first_name):
 
@@ -124,7 +130,9 @@ class RegisterAccountPage:
             EC.visibility_of_element_located(
                 self.FIRST_NAME
             )
-        ).send_keys(first_name)
+        ).send_keys(
+            str(first_name).strip()
+        )
 
     def enter_last_name(self, last_name):
 
@@ -132,7 +140,9 @@ class RegisterAccountPage:
             EC.visibility_of_element_located(
                 self.LAST_NAME
             )
-        ).send_keys(last_name)
+        ).send_keys(
+            str(last_name).strip()
+        )
 
     def enter_middle_name(self, middle_name):
 
@@ -140,7 +150,9 @@ class RegisterAccountPage:
             EC.visibility_of_element_located(
                 self.MIDDLE_NAME
             )
-        ).send_keys(middle_name)
+        ).send_keys(
+            str(middle_name).strip()
+        )
 
     def select_sex(self, sex):
 
@@ -151,10 +163,12 @@ class RegisterAccountPage:
                 )
             )
         ).select_by_visible_text(
-            sex
+            str(sex).strip()
         )
 
     def select_title(self, title):
+
+        title = str(title).strip()
 
         if title.lower() == "dr":
 
@@ -173,6 +187,8 @@ class RegisterAccountPage:
     def select_employment_status(
             self,
             status):
+
+        status = str(status).strip()
 
         if status.lower() == "full-time":
 
@@ -211,7 +227,7 @@ class RegisterAccountPage:
                 )
             )
         ).select_by_visible_text(
-            status
+            str(status).strip()
         )
 
     def enter_dob(self, dob):
@@ -221,12 +237,19 @@ class RegisterAccountPage:
                 self.AGE
             )
         ).send_keys(
-            dob
+            str(dob).strip()
         )
 
     def enter_dependents(
             self,
             dependents):
+
+        dependents = str(
+            dependents
+        ).replace(
+            ".0",
+            ""
+        )
 
         self.wait.until(
             EC.visibility_of_element_located(
@@ -245,7 +268,7 @@ class RegisterAccountPage:
                 self.USERNAME
             )
         ).send_keys(
-            username
+            str(username).strip()
         )
 
     def agree_terms(self):
@@ -272,15 +295,41 @@ class RegisterAccountPage:
                 checkbox
             )
 
+        time.sleep(1)
+
     def click_submit(self):
 
-        self.wait.until(
-            EC.element_to_be_clickable(
+        submit_button = self.wait.until(
+            EC.presence_of_element_located(
                 self.SUBMIT_BUTTON
             )
-        ).click()
+        )
 
-    # Full Registration Flow
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center'});",
+            submit_button
+        )
+
+        time.sleep(1)
+
+        try:
+
+            self.wait.until(
+                EC.element_to_be_clickable(
+                    self.SUBMIT_BUTTON
+                )
+            )
+
+            submit_button.click()
+
+        except Exception:
+
+            self.driver.execute_script(
+                "arguments[0].click();",
+                submit_button
+            )
+
+    # Complete Registration
 
     def register_new_user(
             self,
@@ -333,4 +382,14 @@ class RegisterAccountPage:
 
         self.agree_terms()
 
+        print(
+            f"Submitting Registration For: {username}"
+        )
+
+        time.sleep(1)
+
         self.click_submit()
+
+        print(
+            f"Registration Submitted: {username}"
+        )

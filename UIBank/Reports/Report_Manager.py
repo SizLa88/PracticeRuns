@@ -1,28 +1,18 @@
-from pathlib import Path
+import os
 
 
 class ReportManager:
 
-    REPORT_FOLDER = Path("Reports")
+    REPORT_FOLDER = "Reports"
 
     @staticmethod
-    def create_report_folder():
+    def create_reports_folder():
 
-        ReportManager.REPORT_FOLDER.mkdir(
-            parents=True,
+        os.makedirs(
+            ReportManager.REPORT_FOLDER,
             exist_ok=True
         )
 
-    @staticmethod
-    def log(message):
-
-        ReportManager.create_report_folder()
-
-        report_file = (
-            ReportManager.REPORT_FOLDER /
-            "AutomationReport.txt"
+        print(
+            "[REPORT] Reports folder ready."
         )
-
-        with open(report_file, "a", encoding="utf-8") as report:
-
-            report.write(f"{message}\n")

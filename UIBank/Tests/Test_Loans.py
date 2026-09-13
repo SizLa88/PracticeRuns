@@ -1,17 +1,15 @@
 from Base.Base_Test import BaseTest
 from Pages.Loans_Page import LoansPage
-from Utils.Config import URL
+from Utils.Config import Config
 
 
 class TestLoans(BaseTest):
 
     def test_open_loan(self):
 
-        self.driver.get(URL)
+        self.driver.get(Config.URL)
 
-        loans_page = LoansPage(
-            self.driver
-        )
+        loans_page = LoansPage(self.driver)
 
         loans_page.open_loan_application()
 
@@ -25,6 +23,4 @@ class TestLoans(BaseTest):
 
         loans_page.submit_application()
 
-        print(
-            "Open Loan Successful"
-        )
+        print("Open Loan Successful")
