@@ -1,12 +1,9 @@
 import pytest
 
 from Base.Base_Test import BaseTest
-
 from Pages.Register_Account_Page import RegisterAccountPage
-
 from Utils.Excel_Reader import ExcelReader
-
-from Utils import Config
+from Utils.Config import Config
 
 
 @pytest.mark.parametrize(
@@ -56,7 +53,8 @@ class TestRegisterAccount(BaseTest):
             marital_status,
             date_of_birth,
             dependents,
-            username
+            username,
+            agree_terms
         )
 
         print(

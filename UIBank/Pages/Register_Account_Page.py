@@ -69,7 +69,7 @@ class RegisterAccountPage:
         "maritalStatus"
     )
 
-    AGE = (
+    DATE_OF_BIRTH = (
         By.ID,
         "age"
     )
@@ -171,7 +171,6 @@ class RegisterAccountPage:
         title = str(title).strip()
 
         if title.lower() == "dr":
-
             title = "Mr"
 
         Select(
@@ -186,24 +185,21 @@ class RegisterAccountPage:
 
     def select_employment_status(
             self,
-            status):
+            status
+    ):
 
         status = str(status).strip()
 
         if status.lower() == "full-time":
-
             status = "Full-time"
 
         elif status.lower() == "part-time":
-
             status = "Part-time"
 
         elif status.lower() == "self-employed":
-
             status = "Unemployed"
 
         elif status.lower() == "student":
-
             status = "Part-time"
 
         Select(
@@ -218,7 +214,8 @@ class RegisterAccountPage:
 
     def select_marital_status(
             self,
-            status):
+            status
+    ):
 
         Select(
             self.wait.until(
@@ -232,17 +229,22 @@ class RegisterAccountPage:
 
     def enter_dob(self, dob):
 
-        self.wait.until(
+        field = self.wait.until(
             EC.visibility_of_element_located(
-                self.AGE
+                self.DATE_OF_BIRTH
             )
-        ).send_keys(
+        )
+
+        field.clear()
+
+        field.send_keys(
             str(dob).strip()
         )
 
     def enter_dependents(
             self,
-            dependents):
+            dependents
+    ):
 
         dependents = str(
             dependents
@@ -261,7 +263,8 @@ class RegisterAccountPage:
 
     def enter_username(
             self,
-            username):
+            username
+    ):
 
         self.wait.until(
             EC.visibility_of_element_located(
@@ -295,8 +298,6 @@ class RegisterAccountPage:
                 checkbox
             )
 
-        time.sleep(1)
-
     def click_submit(self):
 
         submit_button = self.wait.until(
@@ -310,8 +311,6 @@ class RegisterAccountPage:
             submit_button
         )
 
-        time.sleep(1)
-
         try:
 
             self.wait.until(
@@ -320,7 +319,10 @@ class RegisterAccountPage:
                 )
             )
 
-            submit_button.click()
+            self.driver.execute_script(
+                "arguments[0].click();",
+                submit_button
+            )
 
         except Exception:
 
@@ -344,7 +346,9 @@ class RegisterAccountPage:
             marital_status,
             dob,
             dependents,
-            username):
+            username,
+            agree_terms
+    ):
 
         self.click_register_button()
 
@@ -376,20 +380,26 @@ class RegisterAccountPage:
             dependents
         )
 
-        self.enter_username(
-            username
+        unique_username = (
+            f"{username}_{int(time.time())}"
         )
 
-        self.agree_terms()
+        self.enter_username(
+            unique_username
+        )
+
+        if str(agree_terms).upper() == "TRUE":
+
+            self.agree_terms()
 
         print(
-            f"Submitting Registration For: {username}"
+            f"Submitting Registration For: "
+            f"{unique_username}"
         )
-
-        time.sleep(1)
 
         self.click_submit()
 
         print(
-            f"Registration Submitted: {username}"
+            f"Registration Submitted: "
+            f"{unique_username}"
         )
